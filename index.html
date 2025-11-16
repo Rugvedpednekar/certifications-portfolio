@@ -30,3 +30,292 @@
         }
 
         /* Glass-style card */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow:
+                0 18px 45px rgba(15, 23, 42, 0.65),
+                0 0 0 1px rgba(15, 23, 42, 0.6);
+            transform: translateY(0) scale(1) !important;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px) scale(1.05) !important; /* smooth zoom + slight lift */
+            box-shadow:
+                0 25px 60px rgba(15, 23, 42, 0.85),
+                0 0 0 1px rgba(129, 140, 248, 0.25);
+            border-color: rgba(129, 140, 248, 0.6);
+            background: rgba(15, 23, 42, 0.93);
+        }
+
+        /* Badge image */
+        .badge-img {
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
+        }
+
+        /* Smooth fade-in animation (opacity only, no transform) */
+        .fade-in-up {
+            opacity: 0;
+            animation: fade-in-up 0.45s ease forwards;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-50">
+
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <!-- Glow blob -->
+        <div class="pointer-events-none absolute inset-x-0 -top-10 flex justify-center opacity-60">
+            <div class="h-40 w-72 rounded-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-300 blur-3xl"></div>
+        </div>
+
+        <!-- HEADER -->
+        <header
+            class="relative glass-card rounded-3xl px-6 sm:px-10 py-8 sm:py-10 mb-10 overflow-hidden fade-in-up">
+            <div class="absolute inset-y-0 right-0 w-64 opacity-30 pointer-events-none hidden sm:block">
+                <div class="h-full w-full bg-gradient-to-tl from-sky-500/40 via-indigo-500/30 to-transparent blur-3xl"></div>
+            </div>
+
+            <div class="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-sky-400/40 bg-sky-500/10 px-3 py-1 text-xs font-semibold tracking-wide text-sky-100">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                        <span>Verified Certifications Portfolio</span>
+                    </div>
+
+                    <div>
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-50">
+                            Rugved Pednekar
+                        </h1>
+                        <p class="mt-2 text-base sm:text-lg text-slate-300 max-w-xl">
+                            A curated collection of verified professional certifications in cloud, agile, and modern
+                            technology practices.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 text-sm text-slate-300">
+                        <a href="mailto:rugved261@gmail.com"
+                           class="inline-flex items-center gap-2 rounded-full border border-slate-600/70 bg-slate-900/60 px-3 py-1.5 hover:border-sky-400/80 hover:bg-slate-900 transition">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            <span class="text-xs sm:text-sm">rugved261@gmail.com</span>
+                        </a>
+
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-400">
+                            <i data-lucide="database" class="w-4 h-4"></i>
+                            <span>Edit credentials directly in the <code class="font-mono text-sky-300">CERTIFICATIONS</code> array.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary card -->
+                <div class="rounded-2xl border border-slate-600/60 bg-slate-900/80 px-4 py-3 sm:px-5 sm:py-4 min-w-[210px]">
+                    <div class="flex items-center justify-between gap-2 text-xs uppercase tracking-wide text-slate-400">
+                        <span>Overview</span>
+                        <i data-lucide="award" class="w-4 h-4 text-amber-300"></i>
+                    </div>
+                    <div class="mt-3 flex items-end gap-3">
+                        <p class="text-3xl font-semibold text-sky-300" id="total-cert-count">0</p>
+                        <p class="text-xs text-slate-400 pb-1">
+                            Active credentials<br />sorted by most recent
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN -->
+        <main class="space-y-6 fade-in-up" style="animation-delay: 0.1s;">
+            <!-- Toolbar -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <h2 class="text-xl sm:text-2xl font-semibold tracking-tight text-slate-100 flex items-center gap-2">
+                    <i data-lucide="layers" class="w-5 h-5 text-sky-300"></i>
+                    <span>Verified Credentials</span>
+                </h2>
+
+                <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                    <span class="inline-flex items-center gap-2 rounded-full border border-slate-600/80 bg-slate-900/80 px-3 py-1 text-slate-300">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+                        Latest first · Auto-sorted by date
+                    </span>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <section>
+                <div id="certifications-list"
+                     class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <p id="loading-message"
+                       class="col-span-full text-center text-sm text-slate-300/80 py-10">
+                        Loading credentials...
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // --- 1. DATA DEFINITION ---
+        // Edit this array to update your certifications.
+        // Date must be in YYYY-MM-DD format for correct sorting.
+        const CERTIFICATIONS = [
+            {
+                name: "Google Cloud Fundamentals: Core Infrastructure",
+                issuer: "Google Cloud (Coursera)",
+                date: "2024-07-01",  // <-- edit if you want the exact date
+                verificationUrl: "https://coursera.org/share/e335bbcb7d822dc7238844fe6be41237",
+                badgeUrl: "https://placehold.co/100x100/4285F4/FFFFFF?text=GCP"
+            },
+            {
+                name: "Google Digital Marketing Fundamentals",
+                issuer: "Google / Coursera",
+                date: "2024-06-15",
+                verificationUrl: "https://drive.google.com/file/d/1zND1hoXAPdl3YhDQg5RDbQyU7rV6JQo0/view",
+                badgeUrl: "https://placehold.co/100x100/EA4335/FFFFFF?text=DM"
+            },
+            {
+                name: "Production Support Program",
+                issuer: "Wiley Edge & Columbia Engineering",
+                date: "2024-05-20",
+                verificationUrl: "https://www.credly.com/badges/14245c04-27a3-41fa-a86e-9cc7eca87fc5/public_url",
+                badgeUrl: "https://placehold.co/100x100/10B981/FFFFFF?text=PS"
+            },
+            {
+                name: "Foundations of Software Testing and Validation",
+                issuer: "University of Leeds (Coursera)",
+                date: "2024-04-10",
+                verificationUrl: "https://coursera.org/share/41c2669a18f370f5e0421d6b9c19759f",
+                badgeUrl: "https://placehold.co/100x100/6366F1/FFFFFF?text=ST"
+            },
+            {
+                name: "Foundations of Cybersecurity",
+                issuer: "Google (Coursera)",
+                date: "2024-03-25",
+                verificationUrl: "https://coursera.org/share/e335bbcb7d822dc7238844fe6be41237",
+                badgeUrl: "https://placehold.co/100x100/0EA5E9/FFFFFF?text=CY"
+            }
+        ];
+
+        // --- 2. RENDERING LOGIC ---
+
+        function renderCertifications() {
+            const certListEl = document.getElementById("certifications-list");
+            const totalCountEl = document.getElementById("total-cert-count");
+
+            // Sort latest first
+            const sortedCerts = [...CERTIFICATIONS].sort(
+                (a, b) => new Date(b.date) - new Date(a.date)
+            );
+
+            totalCountEl.textContent = sortedCerts.length.toString();
+            certListEl.innerHTML = "";
+
+            if (sortedCerts.length === 0) {
+                certListEl.innerHTML = `
+                    <div class="col-span-full glass-card rounded-2xl px-6 py-10 text-center">
+                        <i data-lucide="certificate" class="w-10 h-10 text-sky-300 mx-auto mb-3"></i>
+                        <p class="text-lg font-semibold text-slate-100">No certifications yet</p>
+                        <p class="mt-1 text-sm text-slate-400">
+                            Add your first credential by editing the <code class="font-mono text-sky-300">CERTIFICATIONS</code> array in the source code.
+                        </p>
+                    </div>
+                `;
+            } else {
+                sortedCerts.forEach((cert, index) => {
+                    const dateObj = new Date(cert.date);
+                    const formattedDate = dateObj.toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                    });
+
+                    const badgeHtml = cert.badgeUrl
+                        ? `<img src="${cert.badgeUrl}" alt="${cert.name} Badge"
+                                 class="badge-img w-16 h-16 rounded-xl object-contain flex-shrink-0 bg-slate-900/80 border border-slate-600/80"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/64x64/E0E7FF/4F46E5?text=Cert';" />`
+                        : `<div class="w-16 h-16 rounded-xl bg-slate-900/80 border border-slate-600/80 flex items-center justify-center flex-shrink-0">
+                               <i data-lucide="award" class="w-8 h-8 text-sky-300"></i>
+                           </div>`;
+
+                    const verificationButton = cert.verificationUrl
+                        ? `
+                            <a href="${cert.verificationUrl}" target="_blank"
+                               class="inline-flex items-center justify-center px-3 py-2 text-xs font-semibold rounded-xl
+                                      bg-emerald-500 hover:bg-emerald-400 text-emerald-950 transition w-full">
+                                <i data-lucide="link-2" class="w-4 h-4 mr-1"></i>
+                                Verify Credential
+                            </a>
+                          `
+                        : `
+                            <span
+                              class="inline-flex items-center justify-center px-3 py-2 text-xs font-medium rounded-xl
+                                     bg-slate-800/80 text-slate-400 border border-slate-700/70 w-full">
+                                <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
+                                No public verification link
+                            </span>
+                          `;
+
+                    const card = document.createElement("article");
+                    card.className =
+                        "glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between gap-4 fade-in-up";
+                    card.style.animationDelay = `${0.08 * index + 0.15}s`;
+
+                    card.innerHTML = `
+                        <div class="flex items-start gap-4">
+                            ${badgeHtml}
+                            <div class="flex-1 space-y-1">
+                                <h3 class="text-base sm:text-lg font-semibold text-slate-50 leading-snug">
+                                    ${cert.name}
+                                </h3>
+                                <p class="text-xs sm:text-sm font-medium text-sky-300">
+                                    ${cert.issuer}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 border-t border-slate-700/70 pt-3 mt-1">
+                            <div class="flex items-center justify-between gap-3 text-xs sm:text-sm text-slate-300">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i>
+                                    <span>Earned • ${formattedDate}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                ${verificationButton}
+                            </div>
+                        </div>
+                    `;
+
+                    certListEl.appendChild(card);
+                });
+            }
+
+            // Re-render Lucide icons after dynamic HTML insertion
+            lucide.createIcons();
+        }
+
+        // --- 3. INITIALIZATION ---
+
+        window.addEventListener("load", () => {
+            renderCertifications();
+            // Initial icons (for header, etc.)
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
